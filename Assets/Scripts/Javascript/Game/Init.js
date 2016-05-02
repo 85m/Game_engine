@@ -61,9 +61,6 @@ function loadImages(){
 function ImageLoaded(imageLoaded){
     console.log("%c System: " + imageLoaded + " Loaded!", 'background:#222;color:#bada55');
 }
-
-
-
 loadImages();
 
 Run();
