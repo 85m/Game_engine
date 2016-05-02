@@ -11,10 +11,10 @@ function Circle(x,y,r,c){
 	}
 	this.Physics = {
 		enabled:true,
-		clickable:true,
-		dragAndDroppable:false,
-		colliderIsSameSizeAsTransform:false,
-		boxCollider:{
+		Clickable:true,
+		dragAndDroppable:true,
+		colliderIsSameSizeAsTransform:true,
+		BoxCollider:{
 			position: new Vector(),
 			size: new Vector()
 		}
