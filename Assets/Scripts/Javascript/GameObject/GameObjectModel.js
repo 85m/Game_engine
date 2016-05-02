@@ -2,6 +2,7 @@ function GameObject(){
 	this.name 		= "Model";
 	this.enabled 	= true;//elements qui sont activé/desactivé
 	this.started 	= false;
+	this.renderer 	= true;
 
 	this.frameHovered = 0;
 
@@ -9,6 +10,22 @@ function GameObject(){
 		position: new Vector(),
 		size:new Vector()
 	}
+
+	this.renderer = {
+		that:this.Transform,
+		Material:{
+			Source:''
+		},
+		Draw:function(){
+			ctx.drawImage(	this.Material.Source,
+							this.that.position.x,
+							this.that.position.y,
+							this.that.size.x,
+							this.that.position.y);
+		}
+	}
+
+
 	this.Physics = {
 		enabled:true,
 		clickable:true,
@@ -20,6 +37,7 @@ function GameObject(){
 		}
 
 	}
+
 	/*
 	VECTEUR = angle, magnitude
 	JV

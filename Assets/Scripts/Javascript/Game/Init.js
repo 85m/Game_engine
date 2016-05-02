@@ -14,8 +14,7 @@ window.RequestAnimationFrame = (function(){
 Scenes['Loader'] = new Loader();
 Application.LoadedScene = Scenes['Loader'];
 
-//set le temps quand le jeux commence - on peut le mettre aussi dans le loader.js
-Time.SetTimeWhenGameBegin();
+
 
 
 document.getElementById('change').addEventListener('click',function(){
@@ -61,9 +60,5 @@ function loadImages(){
 function ImageLoaded(imageLoaded){
     console.log("%c System: " + imageLoaded + " Loaded!", 'background:#222;color:#bada55');
 }
-
-
-
-loadImages();
 
 Run();

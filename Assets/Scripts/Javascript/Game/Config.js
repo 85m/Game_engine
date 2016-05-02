@@ -17,6 +17,7 @@ var ImagesPath = [
 /*	{name:'Deserts', path:'Backgrounds/Deserts.jpg'},
 	{name:'Hydrangeas', path:'Backgrounds/Hydrangeas.jpg'},
 	{name:'Jellyfish', path:'Backgrounds/Jellyfish.jpg'}*/
+	{name:'roxas',path:'sprites/roxas.png'}
 ]
 
 var Images = {};

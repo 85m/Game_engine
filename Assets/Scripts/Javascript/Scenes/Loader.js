@@ -11,7 +11,10 @@ function Loader(){
 
 	this.Start = function(){//sera appelé 
 		if(!this.started){
+			//set le temps quand le jeux commence - on peut le mettre aussi dans le loader.js
+			Time.SetTimeWhenGameBegin();
 			//les operations de start
+			loadImages();
 
 			/*
 				On Charge toutes les scenes 

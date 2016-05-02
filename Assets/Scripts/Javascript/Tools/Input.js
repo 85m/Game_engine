@@ -7,7 +7,9 @@ var Input = {
 	},
 	//on utrilise pas le this car il fait reference a window
 	KeyDown:function(event){
-		Input.KeysDown[event.which] = true;	
+		event.preventDefault();
+		event.stopPropagation();
+		Input.KeysDown[event.which] = true;
 	},
 	KeyUp:function(event){
 		delete Input.KeysDown[event.which]; //supprime le contenu dans le array
