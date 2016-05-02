@@ -9,21 +9,8 @@ window.RequestAnimationFrame = (function(){
     };
 })();
 
-
-
 Scenes['Loader'] = new Loader();
 Application.LoadedScene = Scenes['Loader'];
-
-
-
-
-document.getElementById('change').addEventListener('click',function(){
-    if(Application.LoadedScene == Scenes['Scene1']){
-        Application.LoadedScene = Scenes['Scene2'];
-    }else{
-        Application.LoadedScene = Scenes['Scene1'];
-    }
-});
 
 /* **** KEY HANDLER  **** */
 window.addEventListener('keydown',Input.KeyDown);
@@ -36,8 +23,7 @@ window.addEventListener('mousedown',Input.MouseDown);
 window.addEventListener('mouseup',Input.MouseUp);
 /* ********************* */
 
-
-function loadImages(){
+function LoadImages(){
     var count = 0; //combien de image est charger
     for(i in ImagesPath){
         var name = ImagesPath[i].name;
@@ -61,3 +47,12 @@ function ImageLoaded(imageLoaded){
     console.log("%c System: " + imageLoaded + " Loaded!", 'background:#222;color:#bada55');
 }
 Run();
+
+
+document.getElementById('change').addEventListener('click',function(){
+    if(Application.LoadedScene == Scenes['Scene1']){
+        Application.LoadedScene = Scenes['Scene2'];
+    }else{
+        Application.LoadedScene = Scenes['Scene1'];
+    }
+});

@@ -18,7 +18,7 @@ function Vector(){
 		return this;
 	}
 
-	//trouvé la distance entre deux point
+	//trouvé la distance entre deux point - magnitude
 	this.length = function(){
 		var length;
 		length = Math.sqrt( (this.x*this.x) + (this.y*this.y) );//utilisation de la racine carée
@@ -33,7 +33,7 @@ function Vector(){
 	}
 
 	//allé plus loin
-	this.mul = function(factor){//scaller est un nombre
+	this.mul = function(factor){//factor est un nombre
 		this.x *= factor;//multiplie ceci par le nombre donné
 		this.y *= factor;
 		return this;

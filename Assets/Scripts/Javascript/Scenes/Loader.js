@@ -1,10 +1,10 @@
 function Loader(){
-
 	this.name 			= "loader";
 	this.gameObjects 	= [];
 	this.started 		= false; //si la scene à déjà été commencé
 
 	this.Awake = function(){//sera appelé via new Scene
+        LoadImages();
 		console.clear();
 		console.log("%c System:Scene " + this.name + " Created!", 'background:#222;color:#bada55');
 	}
@@ -14,8 +14,6 @@ function Loader(){
 			//set le temps quand le jeux commence - on peut le mettre aussi dans le loader.js
 			Time.SetTimeWhenGameBegin();
 			//les operations de start
-			loadImages();
-
 			/*
 				On Charge toutes les scenes 
 			*/

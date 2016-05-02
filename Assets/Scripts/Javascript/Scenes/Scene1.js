@@ -13,16 +13,10 @@ function Scene1(){
 		if(!this.started){
 			//les operations de start
 			Time.SetTimeWhenSceneBegin();
-
-			//this.gameObjects.push(new Circle(100,150,50,'blue'));
-
-
-
-			this.gameObjects.push(new Charcater(150,150,75,75,'yellow'));
-			this.gameObjects.push(new Rectangle(150,150,75,75,'yellow'));
-
 			this.started = true;//on a fait notre premier passage après update seulement
 
+			//this.gameObjects.push(new Rectangle(150,150,75,75,'yellow'));
+			this.gameObjects.push(new Character());
 
 
 			console.log("%c System:Scene " + this.name + " Started!", 'background:#222;color:#bada55');
@@ -42,7 +36,9 @@ function Scene1(){
 				this.gameObjects[i].Start();
 			}
 		}
-
+/*		if (Application.isDebug) {
+			Debug.Scene();
+		}*/
 		this.GUI();
 	}
 

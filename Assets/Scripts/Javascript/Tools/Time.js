@@ -1,6 +1,6 @@
 var Time = {
 	Time:0,
-	DeltaTime:1,
+	DeltaTime:0,
 	TimeScale:0,//multiplie au deltatime pour accelerer ou deceler une action
 	FPS:0,
 
@@ -48,14 +48,14 @@ var Time = {
 
 
 String.prototype.toHHMMSS = function(){
-	var sec_num 	= parseInt(this,10);
-	var hours 		= Math.floor(sec_num / 3600);
-	var minutes 	= Math.floor((sec_num - (hours*3600)) / 60);
-	var secondes 	= sec_num - (hours*3600) - (minutes * 60);
+	var sec_num = parseInt(this, 10);
+	var hours = Math.floor(sec_num / 3600);
+	var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+	var seconds = sec_num - (hours * 3600) - (minutes * 60);
 
-	if(hours < 10){hours = "0"+hours;}
-	if(minutes < 10){minutes = "0"+minutes;}
-	if(secondes < 10){secondes = "0"+secondes;}
-	var times = hours + " : " + minutes + " : " + secondes;
-	return times;
-}
+	if (hours < 10) { hours = "0" + hours; }
+	if (minutes < 10) { minutes = "0" + minutes; }
+	if (seconds < 10) { seconds = "0" + seconds; }
+	var time = hours + " : " + minutes + " : " + seconds;
+	return time;
+};

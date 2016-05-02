@@ -90,34 +90,45 @@ var Physics = {
 		return false;
 	},
 	CheckCollision:function(){
-		console.log(arguments);
-
-		var result = false;
-
-		if(arguments.length == 2){
-
-			if(!arguments[0].hasOwnProperty('w') && !arguments[0].hasOwnProperty('radius')){
-				if(arguments[1].hasOwnProperty('w')){
-					result = Physics.PointBoxCollision(arguments[0], arguments[1]);
-				}else if(arguments[1].hasOwnProperty('radius')){
-					result = Physics.PointCircleCollision(arguments[0], arguments[1]);
-				}else{
-					result = Physics.BoxBoxCollision(arguments[0], arguments[1]);
+		//console.log(arguments.length);
+		if (arguments.length == 2 ) {
+			//console.log( arguments[0] instanceof Vector );
+			if (arguments[0] instanceof Vector ) {
+				if (arguments[1] instanceof Box) {
+					//console.log('PointBoxCollision');
+					return Physics.PointBoxCollision(arguments[0],arguments[1])
+				} else if (arguments[1] instanceof Circle) {
+					//console.log('PointCircleCollision');
+					return Physics.PointCircleCollision(arguments[0],arguments[1])
 				}
-			}else if(arguments[0].hasOwnProperty('radius')){
-				if(arguments[1].hasOwnProperty('radius')){
-					result = Physics.CircleCircleCollision(arguments[0], arguments[1]);
-				}else if(arguments[1].hasOwnProperty('w')){
-					result = Physics.CircleBoxCollision(arguments[0], arguments[1]);
+			} else if (arguments[0] instanceof Box) {
+				if (arguments[1] instanceof Box) {
+					//console.log('BoxBoxCollision');
+					return Physics.BoxBoxCollision(arguments[0],arguments[1])
+				} else if (arguments[1] instanceof Circle) {
+					//console.log('CircleBoxCollision');
+					return Physics.CircleBoxCollision(arguments[1],arguments[0])
+				} else if (arguments[1] instanceof Vector) {
+					//console.log('PointBoxCollision');
+					return Physics.PointBoxCollision(arguments[1],arguments[0])
+				}
+			} else if (arguments[0] instanceof Circle) {
+				if (arguments[1] instanceof Box) {
+					//console.log('CircleBoxCollision');
+					return Physics.CircleBoxCollision(arguments[0],arguments[1])
+				} else if (arguments[1] instanceof Circle) {
+					//console.log('CircleCircleCollision');
+					return Physics.CircleCircleCollision(arguments[1],arguments[0])
+				} else if (arguments[1] instanceof Vector) {
+					//console.log('PointCircleCollision');
+					return Physics.PointBoxCollision(arguments[1],arguments[0])
 				}
 			}
-		}else if(arguments.length > 2){
-			//map, sizeMap, position, direction
-			result = Physics.TileCollision(arguments[0],arguments[1],arguments[2],arguments[3]);
-		}else{
-			result = result;
+
+
+		} else if (arguments.length == 4 ) {
+			return TileCollision(arguments[0],arguments[1],arguments[2],arguments[3])
 		}
-		return result;
 	},
 	CheckClick:function(){
 		for (var i = 0; i < Application.LoadedScene.gameObjects.length; i++) {

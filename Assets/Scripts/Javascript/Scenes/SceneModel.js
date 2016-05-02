@@ -27,6 +27,9 @@ function Scene(){
 				//this.gameObjects[i].Start();
 			}
 		}
+        if (Application.isDebug) {
+            Debug.Scene();
+        }
 		this.GUI();
 	}
 

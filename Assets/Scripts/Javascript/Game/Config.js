@@ -10,13 +10,11 @@ var gravity 	= new Vector();
 
 var Application = {
 	LoadedScene:null,//reference vers la scene loaded
-	GamePaused: false//gestion de la pause dans le jeu
+	GamePaused: false,//gestion de la pause dans le jeu
+    isDebug: false
 };
-
+/* {name:'name', path:'path/to/image.extension'} */
 var ImagesPath = [
-/*	{name:'Deserts', path:'Backgrounds/Deserts.jpg'},
-	{name:'Hydrangeas', path:'Backgrounds/Hydrangeas.jpg'},
-	{name:'Jellyfish', path:'Backgrounds/Jellyfish.jpg'}*/
 	{name:'roxas',path:'sprites/roxas.png'}
 ]
 

@@ -17,7 +17,7 @@ var Random = {
 		var randomAngle = this.RangeFloat(0, 2*Math.PI,true);
 		var point = new Vector();
 		point.x = (cirlce.x + circle.radius * Math.cos(randomAngle) ) | 0;
-		point.y = (cirlce.y + circle.radius * Math.cos(randomAngle) ) | 0;
+		point.y = (cirlce.y + circle.radius * Math.sin(randomAngle) ) | 0;
 		return point;
 	},
 	InDisk:function(circle){//surface du cercle
@@ -25,8 +25,8 @@ var Random = {
 	},
 	InScreen:function(){//un point dans le canvas
 		var point 	= new Vector();
-		point.x 	= Math.floor(Math.random() * canvas.width);
-		point.x 	= Math.floor(Math.random() * canvas.height);
+		point.x 	= this.RangeInt(0,canvas.width,true);
+		point.y 	= this.RangeInt(0,canvas.height,true);
 		return point;
 	},
 	InArea:function(box){
@@ -36,8 +36,16 @@ var Random = {
 		return point;
 	},
 	ColorRGB:function(){
-		return 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+		return "rgb(" + this.RangeInt(0,255,true) + ","
+			+ this.RangeInt(0,255,true) + ","
+			+ this.RangeInt(0,255,true) + ")";
 	},
+    ColorRGBA:function(alpha = 1){
+        return "rgba(" + this.RangeInt(0,255,true)
+            + "," + this.RangeInt(0,255,true)
+            + "," + this.RangeInt(0,255,true)
+            + "," + a + ")";
+    },
 	ColorHex:function(){
 		var letters = [0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F'];
 		var color = '#';
@@ -45,11 +53,6 @@ var Random = {
         	color += letters[Math.Random.RangeInt(0,letters.length,false)];
         }
         return color;
-	},
-	ColorRGBA:function(alpha = 1){
-		return 'rgba(' + (Math.floor(Math.random() * 256)) + ',' + 
-						 (Math.floor(Math.random() * 256)) + ',' + 
-						 (Math.floor(Math.random() * 256)) + ','+ alpha +')';
 	},
 	AngleDegree:function(min,max){
 		return this.RangeInt(min,max,true) % 360;

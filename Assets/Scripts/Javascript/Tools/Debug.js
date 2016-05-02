@@ -3,7 +3,7 @@ var Debug = {
 		ctx.fillStyle = "rgba(122,122,122,0.4)";
 		ctx.fillRect(4,4,150,120);
 
-		ctx.font = "14px Georgia"
+		ctx.font = "14px Georgia";
 		if(Time.FPS > 40) ctx.fillStyle = "green";
 		if(Time.FPS < 40) ctx.fillStyle = "orange";
 		if(Time.FPS < 20) ctx.fillStyle = "red";
@@ -26,11 +26,11 @@ var Debug = {
 		for (var i = 0; i < Application.LoadedScene.gameObjects.length; i++) {
 			var go = Application.LoadedScene.gameObjects[i];
 			var obj = go.Transform;
-			var box = go.Physics.BoxCollider;
+			var box = go.Physics.boxCollider;
 
 
-			//console.log(obj.pivot);
-			ctx.fillStyle = "lightgreen";
+			console.log(obj.position.x,obj.position.y,obj.size.x,obj.size.y);
+			ctx.fillStyle = "rgba(144,238,144,0.4)";
 			ctx.fillRect(box.position.x,box.position.y,box.size.x,box.size.y);
 			ctx.strokeStyle = "gray";
 			ctx.strokeRect(box.position.x,box.position.y,box.size.x,box.size.y);
