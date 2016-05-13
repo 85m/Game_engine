@@ -28,3 +28,19 @@ var Input = {
 		Input.MouseDraggedElement = null;
 	}
 }
+
+
+/*
+Keycode Cheat
+esc = 27
+z = 90
+q = 81
+s = 83
+d = 39
+space = 32
+left = 37
+up = 38
+right = 39
+bottom = 40
+
+*/

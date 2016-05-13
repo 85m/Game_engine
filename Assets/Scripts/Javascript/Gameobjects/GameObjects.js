@@ -138,13 +138,15 @@ function GameObject() {
 	this.enabled = true;
 	this.started = false;
 	this.rendered = true;
+
+	this.groups = [];
 	
-	this.Transform = {};
-	this.Transform.position = new Vector();
-	this.Transform.size = new Vector();
-	this.Transform.scale = new Vector(1,1);
-	this.Transform.pivot = new Vector(0,0);
-	this.Transform.angle = 0;
+	this.Transform 			= {};
+	this.Transform.position =  this.parents.position 	|| new Vector();
+	this.Transform.size 	=  this.parents.size 		|| new Vector();
+	this.Transform.scale 	=  this.parents.scale 		|| new Vector(1,1);
+	this.Transform.pivot 	=  this.parents.pivot 		|| new Vector(0,0);
+	this.Transform.angle 	=  this.parents.angle 		|| 0;
 
 	this.Physics = {};
 	this.Physics.enabled = true;
@@ -240,13 +242,41 @@ function GameObject() {
 			this.started = true;
 			console.log('%c System:GameObject ' + this.name + " Started !", 'background:#222; color:#bada55');
 		}
-		this.Update();
+		this.preUpdate();
 	};
-	this.Update = function() {
-		if ( this.enabled ) {
+
+
+	this.addGameObject(elem){
+
+		this.groups.push(elem);
+		console.log(this.groups);
+
+		console.log(elem);
+		//elem.Start();
+/*		for (var i = 0; i < this.GameObjects.length; i++) {
+				
+			}*/
+	}
+
+
+	this.preUpdate = function(){
+		if (this.enabled ) {
+			//le code a faire avant cette frame
+
+
+			this.update();
 		}
-		this.GUI();	
+	}
+
+
+	this.Update = function() {
+		this.postUpdate();
 	};
+
+	this.postUpdate = function() {
+		this.GUI();	
+	}
+
 	this.GUI = function() {
 		
 	}

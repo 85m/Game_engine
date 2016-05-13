@@ -1,9 +1,11 @@
 Gfx = {
 	Filters:{
 		Greyscale:function(affectedZone){
+
 			//parser tout les pixels
 			var pixels = ctx.getImageData(affectedZone.x,affectedZone.y,affectedZone.w,affectedZone.h);
 			var d = pixels.data;
+			//console.log(pixels);
 
 			for(var i = 0 ; i < d.length; i += 4){//un seul tour de boucle pour les pixels qui prend 3 place
 				

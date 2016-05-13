@@ -133,22 +133,22 @@
 *	Add NameOfYourGameObject.Start() in your scene.
 */
 
-function Character(x,y) {
-	this.name = "Character";
+function Child(x,y) {
+	this.name = "Child";
 	this.enabled = true;
 	this.started = false;
 	this.rendered = true;
 
 	this.Parent = null;
 	
-	this.Transform 			= {};
+	this.Transform = {};
 	this.Transform.relativePosition = new Vector(x,y);
 	this.Transform.position = new Vector(x,y);
 	this.Transform.size = new Vector(50,50);
 	this.Transform.relativeScale = new Vector(1,1);
-	this.Transform.scale 	= new Vector(1,1);
-	this.Transform.pivot 	= new Vector(0.5,0.5);
-	this.Transform.angle 	= 0;
+	this.Transform.scale = new Vector(1,1);
+	this.Transform.pivot = new Vector(0,0);
+	this.Transform.angle = 0;
 
 	this.Physics = {};
 	this.Physics.enabled = true;
@@ -170,7 +170,7 @@ function Character(x,y) {
 			SizeFrame: new Vector(),
 			CurrentFrame: new Vector(),
 		},
-
+		AnimationCount:0,
 		Animation:{
 			animated: true,
 			animations: [],
@@ -179,10 +179,13 @@ function Character(x,y) {
 		},
 		
 		Draw: function() {
-			ctx.save();
-			ctx.translate( this.that.position.x  , this.that.position.y);
-			ctx.rotate(Math.DegreeToRadian(this.that.angle));
+			var scaledSizeX = this.that.size.x*this.that.scale.x;
+			var scaledSizeY = this.that.size.y*this.that.scale.y;
 
+			ctx.save();
+			ctx.translate( (this.that.position.x) , 
+							(this.that.position.y) );
+			ctx.rotate( Math.DegreeToRadian(this.that.angle) );
 			if (this.isSpriteSheet) 
 			{
 				if (this.Animation.animated) {	
@@ -203,62 +206,42 @@ function Character(x,y) {
 				}
 				this.Material.CurrentFrame = this.Animation.current[this.Animation.currentIndex];
 
-				var scaledSizeX = this.that.size.x*this.that.scale.x;
-				var scaledSizeY = this.that.size.y*this.that.scale.y;
-				//console.log(this);
 				ctx.drawImage(this.Material.Source,
 								this.Material.CurrentFrame.x,
 								this.Material.CurrentFrame.y,
 								this.Material.SizeFrame.x,
 								this.Material.SizeFrame.y,
-								/*this.that.position.x*/-this.that.pivot.x*this.that.size.x,
-								/*this.that.position.y*/-this.that.pivot.y*this.that.size.y,
+								-this.that.pivot.x*scaledSizeX,
+								-this.that.pivot.y*scaledSizeY,
 								scaledSizeX,
 								scaledSizeY);
 			} 
 			else 
 			{
-				var scaledSizeX = this.that.size.x*this.that.scale.x;
-				var scaledSizeY = this.that.size.y*this.that.scale.y;
 				ctx.drawImage(this.Material.Source,
-								-this.that.pivot.x*this.that.size.x,
-								-this.that.pivot.y*this.that.size.y,
+								-this.that.pivot.x*scaledSizeX,
+								-this.that.pivot.y*scaledSizeY,
 								scaledSizeX,
 								scaledSizeY);
 			}
-
-			ctx.restore();		
+			ctx.restore();
 		}
-	}
+					
+
+	};
 
 
 	this.Awake = function() {
 		console.log('%c System:GameObject ' + this.name + " Created !", 'background:#222; color:#b00b55');
-
-	}
+	};
 	this.Start = function() {
 		if (!this.started) {
 			// operation start
 			this.started = true;
-
-
-			this.Renderer.Material.Source = Images['Character Boy'];
-
-/*			this.Transform.position.x = config.x;
-			this.Transform.position.y = config.y;*/
-			this.Transform.size.x = 110;
-			this.Transform.size.y = 171;
-			this.Transform.scale.x = 1;
-			this.Transform.scale.y = 1;
-
-			this.Physics.ColliderIsSameSizeAsTransform = true;
-			this.Physics.Collider.position 	= this.Transform.position;
-			this.Physics.Collider.size 		= this.Transform.size;
-
 			console.log('%c System:GameObject ' + this.name + " Started !", 'background:#222; color:#bada55');
 		}
 		this.PreUpdate();
-	}
+	};
 	this.PreUpdate = function() {
 		if ( this.enabled ) {
 			if (this.Parent != null) {
@@ -278,25 +261,23 @@ function Character(x,y) {
 			this.Update();
 		}
 			
-	}
+	};
 	this.Update = function() {
+		
+		ctx.fillStyle = "#00B51A";
+		ctx.fillRect(this.Transform.position.x, this.Transform.position.y, this.Transform.size.x*this.Transform.scale.x, this.Transform.size.y*this.Transform.scale.y);
 
-		if(Input.KeysDown[39]){
-			this.Transform.relativePosition.x += 10;
-		}
-		if(Input.KeysDown[37]){
-			this.Transform.relativePosition.x -= 10;
-		}
-		this.Renderer.Draw();
-		this.postUpdate();
-	}
+		this.PosUpdate();	
+	};
+	this.PosUpdate = function() {
 
-	this.postUpdate = function() {
+/*		if(Input.KeysDown[39]){
+			this.Transform.relativePosition.x -= 15;
+		}*/
 		this.GUI();	
-	}
-
+	};
 	this.GUI = function() {
-		if(Application.debugMode) Debug.debugObject(this);
+		
 	}
 	this.onHover = function() {
 		this.Physics.countHovered ++;

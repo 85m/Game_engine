@@ -27,7 +27,6 @@ Emitter.prototype.emitParticles = function(){
 
 Emitter.prototype.update = function(){
 	this.emitParticles();
-	
 	for(var particle in this.particles){
 		//console.log(this.particles[particle]);
 		this.particles[particle].update();
