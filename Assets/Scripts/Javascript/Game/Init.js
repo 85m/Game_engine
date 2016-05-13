@@ -1,58 +1,64 @@
 window.RequestAnimationFrame = (function(){
-    return  window.requestAnimationFrame 			|| 
-            window.webkitRequestAnimationFrame     	|| 
-            window.mozRequestAnimationFrame        	|| 
-            window.oRequestAnimationFrame          	|| 
-            window.msRequestAnimationFrame         	|| 
-    function(callback, element){//si RequestAnimationFrame ne repond pas (envoi false) on utilise setTimeOut
+    return  window.requestAnimationFrame         || 
+            window.webkitRequestAnimationFrame   || 
+            window.mozRequestAnimationFrame      || 
+            window.oRequestAnimationFrame        || 
+            window.msRequestAnimationFrame       || 
+    function(callback, element){
         window.setTimeout(callback, 1000 / 60);
     };
 })();
 
-Scenes['Loader'] = new Loader();
-Application.LoadedScene = Scenes['Loader'];
 
-/* **** KEY HANDLER  **** */
-window.addEventListener('keydown',Input.KeyDown);
-window.addEventListener('keyup',Input.KeyUp);
-/* ********************* */
 
-/* *** MOUSE HANDLER **** */
-window.addEventListener('mousemove',Input.MouseMove);
-window.addEventListener('mousedown',Input.MouseDown);
-window.addEventListener('mouseup',Input.MouseUp);
-/* ********************* */
+/********************
+		Event
+*********************/
+window.addEventListener("keydown",Input.KeyDown);
+window.addEventListener("keyup",Input.KeyUp);
+window.addEventListener("mouseup",Input.MouseUp);
+window.addEventListener("mousedown",Input.MouseDown);
+window.addEventListener("mousemove",Input.MouseMove);
 
-function LoadImages(){
-    var count = 0; //combien de image est charger
-    for(i in ImagesPath){
-        var name = ImagesPath[i].name;
-        var content = "Assets/Graphics/"+ ImagesPath[i].path;
 
-        Images[name] = new Image();
-        Images[name].src = content;
+/********************
+		Start
+*********************/
 
-        Images[name].onload = function(){
-            count++;
-            //Scene.loader.imageLoaded = count - > pour le loader
+Time.SetTimeWhenGameBegin();
+Scenes["Loader"] = new Loader();
+Application.LoadedScene = Scenes["Loader"];
 
-            //toutes les images ont été chargé
-            if(count == ImagesPath.length){
-                ImageLoaded(count);
-            }
-        }
-    }
+// Image Loader
+function LoadImages() {
+	//Images[name].src = "Assets/Graphics" + ImagesPath[name].path;
+	var count = 0;
+	for (var i = 0; i < ImagesPath.length; i++) {
+		var name = ImagesPath[i].name;
+		Images[name] = new Image();
+		Images[name].src = "Assets/Graphics/" + ImagesPath[i].path;
+		Images[name].onload = function() {
+			count ++;
+			Scenes.Loader.imageLoaded = count;
+			// Scene.loader.imageLoaded = count
+			if (count == ImagesPath.length) {
+				// All Image are Loaded
+				ImageLoaded(count);
+			}
+		}
+	}
 }
-function ImageLoaded(imageLoaded){
-    console.log("%c System: " + imageLoaded + " Loaded!", 'background:#222;color:#bada55');
+function ImageLoaded(imageLoaded) {
+	console.log('%c System: ' + imageLoaded + " image(s) Loaded !", 'background:#222; color:#10ADED');
+
+	//Here? for wait the download of loader
+	Scenes["Scene1"] = new Scene1();
+	Application.LoadedScene = Scenes["Scene1"];
+	
+	//Scenes["ParticleScene"] = new ParticleScene();
+	//Application.LoadedScene = Scenes["ParticleScene"];
 }
+
+
+
 Run();
-
-
-document.getElementById('change').addEventListener('click',function(){
-    if(Application.LoadedScene == Scenes['Scene1']){
-        Application.LoadedScene = Scenes['Scene2'];
-    }else{
-        Application.LoadedScene = Scenes['Scene1'];
-    }
-});

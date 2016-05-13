@@ -1,55 +1,93 @@
-function Loader(){
-	this.name 			= "loader";
-	this.gameObjects 	= [];
-	this.started 		= false; //si la scene à déjà été commencé
+/**	**** Create a new Scene **** 
+*
+*	@step 1							Copy the content of this file in a new .js document.
+*   ----------------------------------------------------------------------------------------------------------------------------
+*	@step 2							Save the new file in Assets/Javascript/Scenes/NameOfYourScene.js .
+*   ----------------------------------------------------------------------------------------------------------------------------
+*	@step 3                      	In the index.html add below this comment <!-- Scene --> the line: 
+*                    "<script type="text/javascript" src="Assets/Scripts/Javascript/Scenes/NameOfYourGameObject.js"></script>"
+*	----------------------------------------------------------------------------------------------------------------------------
+*	@step 4						    For create a new scene, use this instruction: "new Scene()".
+*/
 
-	this.Awake = function(){//sera appelé via new Scene
-        LoadImages();
-		console.clear();
-		console.log("%c System:Scene " + this.name + " Created!", 'background:#222;color:#bada55');
+/*	**** How to make the setup of a Scene ****
+*	
+*	@property name 																											{string} 			 
+*	The name of the scene.
+*	--------------------------------------------------------------------------------------------------------------------------------
+*	@property GameObjects 																				   {array[GameObject1, ...]} 			 
+*	All the GameObject of the scene	
+*
+*/
+
+/*	**** Scene's Methods ****
+*
+*	@method Awake()									
+*	Called at the instruction new Scene().
+*	--------------------------------------------------------------------------------------------------------------------------------
+*	@method Start()									
+*	Called at the first use of scene in game.
+*	--------------------------------------------------------------------------------------------------------------------------------
+*	@method Update()								
+*	Called each frame,code game is here.
+*	--------------------------------------------------------------------------------------------------------------------------------
+*	@method GUI()
+*	Called each frame, code all the GUI here.
+*/
+
+/* **** For launch Scene ****
+*
+*	To load your scene, use this instruction: "Application.LoadLevel(LevelName)".
+*/
+function Loader() {
+	this.name = "Loader";
+	this.GameObjects =[];
+
+	this.started = false;
+	this.imageLoaded = 0;
+	this.logo = new Image();
+	this.logo.src = "Assets/Graphics/Logos/logo_technobel.png";
+
+	this.Awake = function() {
+		//console.clear();
+		console.log('%c System:Scene ' + this.name + " Created !", 'background:#222; color:#bada55');
 	}
-
-	this.Start = function(){//sera appelé 
-		if(!this.started){
-			//set le temps quand le jeux commence - on peut le mettre aussi dans le loader.js
+	this.Start = function() {
+		if (!this.started) {
 			Time.SetTimeWhenGameBegin();
-			//les operations de start
-			/*
-				On Charge toutes les scenes 
-			*/
-			Scenes['Scene1'] = new Scene1();
-			Scenes['Scene2'] = new Scene2();
+			// operation start
+			LoadImages();
+			this.started = true;
 
-			/* Apres le chargement des scenes on demarre avec la premieère scene  */
-			Application.LoadedScene = Scenes['Scene1'];
+			//Scenes['scene1'] = new Scene1();
+			//Application.LoadedScene = Scenes['scene1'];
 
-			this.started = true;//on a fait notre premier passage après update seulement
-			console.log("%c System:Scene " + this.name + " Started!", 'background:#222;color:#bada55');
+			console.log('%c System:Scene ' + this.name + " Started !", 'background:#222; color:#bada55');
 			Time.SetTimeWhenGameLoaded();
 		}
 		this.Update();
 	}
-	this.Update = function(){ //mise a jour de jeu pednant qu'il tourne
-
-		if(!Application.GamePaused){//met le jeu en pause met si start est toujours appelé
-			for (var i = 0; i < this.gameObjects.length; i++) {
-				//this.gameObject[i];
+	this.Update = function() {
+			ctx.fillStyle = "rgb(230, 230, 230)";
+			ctx.fillRect(0,0, canvas.width, canvas.height);
+			ctx.drawImage(this.logo, canvas.width * .5 - this.logo.width *.5, canvas.height *.3);
+			for (var i = 0; i < this.GameObjects.length; i++) {
+				//this.GameObjects[i].Start();
 			}
-		}
 		this.GUI();
 	}
-
-	this.GUI = function(){//affichage de l'interface
-
-		if(!Application.GamePaused){
-
-			//show UI
-
-		}else{
-
-			//show pause menu
+	this.GUI = function() {
+			ctx.strokeStyle = "grey";
+			ctx.strokeRect( canvas.width / 2 - 200, 500, 400, 20);
+			ctx.fillStyle = "grey";
+			var portion = 400 / ImagesPath.length;
+			ctx.RoundedBox( canvas.width / 2 - 198, 503, this.imageLoaded * portion - 4, 15, 6);
+		
+		if(Application.debugMode)
+		{
+			Debug.debugScene();
 		}
-
 	}
+
 	this.Awake();
 }

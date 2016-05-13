@@ -1,39 +1,30 @@
 var Input = {
-	//souris,clavier
-	KeysDown:[],
-	MousePosition:{
-		x:0,
-		y:0
+	KeysDown: [],
+	MousePosition: new Vector(),
+	KeyDown: function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		Input.KeysDown[e.keyCode] = true;
 	},
-	//on utrilise pas le this car il fait reference a window
-	KeyDown:function(event){
-		event.preventDefault();
-		event.stopPropagation();
-		Input.KeysDown[event.which] = true;
+	KeyUp: function(e) {
+		delete Input.KeysDown[e.keyCode];
 	},
-	KeyUp:function(event){
-		delete Input.KeysDown[event.which]; //supprime le contenu dans le array
+	MouseDown: function(e) {
+		//console.log(e);
+		Input.MouseClick = true;
+		Input.MouseLongClick = true;
+		Input.MouseReload = 1;		
 	},
-	MouseMove:function(event){
+	MouseMove: function(e) {
 		var rect = canvas.getBoundingClientRect();
-		Input.MousePosition.x = (event.clientX - rect.left) / (rect.right - rect.left) * canvas.width | 0;
-		Input.MousePosition.y = (event.clientY - canvas.offsetTop) / (rect.bottom - rect.top) * canvas.height | 0;
+		Input.MousePosition.x = (e.clientX - rect.left) / (rect.right - rect.left) * canvas.width | 0;
+		Input.MousePosition.y = (e.clientY - canvas.offsetTop) / (rect.bottom - rect.top) * canvas.height | 0;
 	},
-	MouseDown:function(event){
-		Input.MouseClick = true; //gerer le click
-		Input.MouseLongClick = true; //gerer les long click
-		Input.MouseReload = 1; //gerer les double click
-
-	},
-	MouseUp:function(event){
+	MouseUp: function(e) {
 		Input.MouseClick = false;
 		Input.MouseLongClick = false;
 		Input.MouseReload = 0;
-		Input.MouseDragging = false;
-		Input.DraggedElement = false;
+		Input.MouseDraging = false;
+		Input.MouseDraggedElement = null;
 	}
-
-
 }
-
-

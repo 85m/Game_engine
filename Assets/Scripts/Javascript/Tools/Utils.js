@@ -1,23 +1,59 @@
-function DotProducts(vector1,vector2){
-	 return vector1.x * vector2.x + vector1.y * vector2.y;
-	//si on veux ajouter dans le cas de la 3d ajouter à la fin + (vector1.z * vector2.z)
-}
-Math.Clamp = function(value,min,max){
-	return Math.min(Math.max(value, min), max);
+// v1n, v2n are normalized vector
+function DotProduct(v1n,v2n) {
+	return v1n.x * v2n.x + v1n.y * v2n.y;
 }
 
-Math.DegreeToRadian = function(deg){
-    // 2*PI = 360
-    // x = deg
-    // Regle de 3
-	return deg * Math.PI / 180;
-}
-Math.RadianToDegree = function(rad){
-	return rad * 180 / Math.PI;
+function distPointToPoint(p1,p2) {
+	return Math.sqrt( (p1.x - p2.x)*(p1.x - p2.x)+(p1.y - p2.y)*(p1.y - p2.y) );
 }
 
-function canvasText(label, value, x, y, color = "white") {
-    ctx.font = '14px Georgia';
-    ctx.fillStyle = color;
-    ctx.fillText( label + ' : ' + value, x, y);
+function updateForDragAndDrop(go) {
+	var gameObject = go;
+	if (Input.MouseDraging) {
+		gameObject.Transform.position.x = Input.MousePosition.x + gameObject.mousePositionOffset.x;
+		gameObject.Transform.position.y = Input.MousePosition.y + gameObject.mousePositionOffset.y;
+		
+		gameObject.Physics.Collider.position = gameObject.Transform.position;
+	}
+}
+
+
+CanvasRenderingContext2D.prototype.RoundedBox = function(x,y,w,h,r) 
+{
+    if (typeof r === "undefined") {
+        r = 2;
+    }
+    this.beginPath();
+    this.moveTo(x + r, y);
+    this.lineTo(x + w - r, y);
+    this.quadraticCurveTo(x + w, y, x + w, y + r);
+    this.lineTo(x + w, y + h - r);
+    this.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    this.lineTo(x + r, y + h);
+    this.quadraticCurveTo(x, y + h, x, y + h - r);
+    this.lineTo(x, y + r);
+    this.quadraticCurveTo(x, y, x + r, y);
+    this.closePath();
+    this.fill();
+};
+
+
+/*
+index = x + y * col
+
+x = index % col,
+y = (index - x) / col
+
+*/
+
+//find index in array
+function IndexFromCoord(x,y,col){
+    return y * col + x;
+}
+//find coordonne from index
+function CoordFromIndex(i,col){
+
+    var x = i % col;
+    var y =  (i - x) / col;
+    return new Vector( x , y );
 }
